@@ -13,5 +13,8 @@
     "pdfkit": "^0.17.2",
     "qrcode": "^1.5.4",
     "spotify-web-api-node": "^5.0.2"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
   }
 }
