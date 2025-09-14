@@ -13,10 +13,10 @@ const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET
 const PLAYLIST_ID = process.env.PLAYLIST_ID
 
 // === Layout-Parameter ===
-const CARD_WIDTH_MM = 68
-const CARD_HEIGHT_MM = 68
+const CARD_WIDTH_MM = 67
+const CARD_HEIGHT_MM = 67
 const GAP_MM = 0
-const MARGIN_MM = 5
+const MARGIN_MM = 4
 
 const MM_TO_PT = 2.83465
 const CARD_WIDTH = CARD_WIDTH_MM * MM_TO_PT
@@ -102,18 +102,21 @@ async function generatePdf(tracks, outPath) {
       const x = MARGIN + col * (CARD_WIDTH + GAP)
       const y = MARGIN + row * (CARD_HEIGHT + GAP)
 
-      // Zufällige Hintergrundfarbe
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)]
-      doc.save()
-      doc.rect(x, y, CARD_WIDTH, CARD_HEIGHT)
-      doc.fill(color)
-      doc.restore()
+      // Hintergrund-Bild
+      doc.image('img/qr_bg.png', x, y, {
+        width: CARD_WIDTH,
+        height: CARD_HEIGHT,
+      })
 
-      const qrPadding = 24
+      const qrPadding = 42
       const fitW = CARD_WIDTH - qrPadding * 2
       const fitH = CARD_HEIGHT - qrPadding * 2
       if (pageQr[idx]) {
-        doc.image(pageQr[idx], x + qrPadding, y + qrPadding, { fit: [fitW, fitH], align: 'center', valign: 'center' })
+        doc.image(pageQr[idx], x + qrPadding, y + qrPadding, {
+          fit: [fitW, fitH],
+          align: 'center',
+          valign: 'center',
+        })
       }
     }
 
