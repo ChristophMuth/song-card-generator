@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Card Generator</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .help-text a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+
+        .help-text code {
+            background: #f1f3f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+
+        .download-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .download-link:hover {
+            background: #218838;
+        }
+
+        .info-section {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            color: #0c5460;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Song Card Generator</h1>
+            <p>Generate beautiful printable song cards from your Spotify playlists</p>
+        </div>
+
+        <div class="info-section">
+            <h3>📋 How to get your Spotify credentials:</h3>
+            <p>1. Go to <a href="https://developer.spotify.com/dashboard" target="_blank">Spotify Developer Dashboard</a></p>
+            <p>2. Create a new app and copy your Client ID and Client Secret</p>
+            <p>3. For the Playlist ID, open your playlist in Spotify and copy the ID from the URL</p>
+        </div>
+
+        <form id="generateForm">
+            <div class="form-group">
+                <label for="clientId">Spotify Client ID</label>
+                <input 
+                    type="text" 
+                    id="clientId" 
+                    name="clientId" 
+                    placeholder="Enter your Spotify Client ID"
+                    required
+                >
+                <div class="help-text">
+                    Get this from your <a href="https://developer.spotify.com/dashboard" target="_blank">Spotify Developer Dashboard</a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="clientSecret">Spotify Client Secret</label>
+                <input 
+                    type="password" 
+                    id="clientSecret" 
+                    name="clientSecret" 
+                    placeholder="Enter your Spotify Client Secret"
+                    required
+                >
+                <div class="help-text">
+                    Keep this secret! Also from your Spotify Developer Dashboard
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="playlistId">Playlist ID</label>
+                <input 
+                    type="text" 
+                    id="playlistId" 
+                    name="playlistId" 
+                    placeholder="Enter Spotify Playlist ID"
+                    required
+                >
+                <div class="help-text">
+                    Example: From URL <code>https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M</code><br>
+                    The Playlist ID is: <code>37i9dQZF1DXcBWIGoYBM5M</code>
+                </div>
+            </div>
+
+            <button type="submit" class="generate-btn" id="generateBtn">
+                Generate Song Cards
+            </button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating your song cards... This may take a few moments.</p>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Main form handler
+        document.getElementById('generateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const generateBtn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            // Reset UI
+            generateBtn.disabled = true;
+            loading.classList.add('active');
+            result.style.display = 'none';
+            result.className = 'result';
+            
+            try {
+                const clientId = formData.get('clientId');
+                const clientSecret = formData.get('clientSecret');
+                const playlistId = formData.get('playlistId');
+
+                if (!clientId || !clientSecret || !playlistId) {
+                    throw new Error('Please fill in all required fields');
+                }
+
+                // Send request to server to generate PDF
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        clientId: clientId,
+                        clientSecret: clientSecret,
+                        playlistId: playlistId
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to generate song cards');
+                }
+
+                // Get the PDF blob from response
+                const pdfBlob = await response.blob();
+                
+                // Create download link
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'song_cards.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                result.className = 'result success';
+                result.innerHTML = `
+                    <h3>✅ Success!</h3>
+                    <p>Song cards generated and downloaded successfully!</p>
+                    <p style="margin-top: 15px; font-size: 0.9em;">
+                        <strong>Print tip:</strong> Use "Duplex - Flip on short edge" for double-sided printing.
+                    </p>
+                `;
+
+            } catch (error) {
+                console.error('Error:', error);
+                result.className = 'result error';
+                result.innerHTML = `
+                    <h3>❌ Error</h3>
+                    <p>${error.message}</p>
+                    <p>Please check your credentials and try again.</p>
+                `;
+            } finally {
+                generateBtn.disabled = false;
+                loading.classList.remove('active');
+            }
+        });
+
+        // Auto-format playlist ID if user pastes full URL
+        document.getElementById('playlistId').addEventListener('paste', function(e) {
+            setTimeout(() => {
+                const value = e.target.value;
+                const match = value.match(/playlist\/([a-zA-Z0-9]+)/);
+                if (match) {
+                    e.target.value = match[1];
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

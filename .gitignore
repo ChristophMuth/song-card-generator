@@ -1,3 +1,12 @@
+# Dependencies
+node_modules/
+
+# Generated files
+generated/
+*.pdf
+hitster_cards.pdf
+
+# Environment variables
 .env
 .idea
 node_modules
