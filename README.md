@@ -29,3 +29,7 @@ Es werden Karten mit **QR-Codes zu Spotify-Songs** (Vorderseite) und **Song-Info
 ## 🎮 Nutzung
 
     node index.js
+
+## 🚀 Start
+
+    npm run start
