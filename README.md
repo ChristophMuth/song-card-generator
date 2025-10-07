@@ -1,6 +1,6 @@
-# 🎵 HITSTER Card Generator
+# 🎵 Song Card Generator
 
-Dieses Projekt erzeugt eine **druckfertige PDF-Erweiterung** für das Spiel [HITSTER](https://hitstergame.com/).  
+Dieses Projekt erzeugt eine **druckfertige PDF-Erweiterung** für ein bekanntes Musikratespiel.  
 Es werden Karten mit **QR-Codes zu Spotify-Songs** (Vorderseite) und **Song-Infos (Interpret, Jahr, Titel)** (Rückseite) generiert, sodass man eigene Playlists in das Spiel integrieren kann.
 
 ---
@@ -14,7 +14,6 @@ Es werden Karten mit **QR-Codes zu Spotify-Songs** (Vorderseite) und **Song-Info
 - Rückseiten sind **horizontal gespiegelt**, damit sie exakt passen (Duplex „Flip on short edge“).
 - QR-Codes verlinken direkt auf die Songs bei Spotify.
 - Interpret oben, Jahr mittig (fett), Titel unten.
-- Zwischenräume (2 mm) und Außenränder (5 mm) für sauberes Schneiden.
 
 ---
 
