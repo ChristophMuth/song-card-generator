@@ -8,15 +8,6 @@ hitster_cards.pdf
 
 # Environment variables
 .env
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# Logs
-*.log
-npm-debug.log*
+.idea
+node_modules
+song_cards.pdf
