@@ -1,14 +1,18 @@
 {
   "name": "song-card-generator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generate beautiful printable song cards from Spotify playlists",
+  "main": "server.js",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
+    "cli": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "private": true,
   "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "pdfkit": "^0.17.2",
     "qrcode": "^1.5.4",
