@@ -1,6 +1,6 @@
 # 🎵 Song Card Generator
 
-Dieses Projekt erzeugt eine **druckfertige PDF-Erweiterung** für ein bekanntes Musikratespiel.  
+Dieses Projekt erzeugt eine **druckfertige PDF-Erweiterung** für ein bekannten Musikratespiels.  
 Es werden Karten mit **QR-Codes zu Spotify-Songs** (Vorderseite) und **Song-Infos (Interpret, Jahr, Titel)** (Rückseite) generiert, sodass man eigene Playlists in das Spiel integrieren kann.
 
 ---
