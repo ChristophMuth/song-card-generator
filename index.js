@@ -194,7 +194,7 @@ async function generatePdf(tracks, outPath) {
       return
     }
 
-    const outFile = path.resolve(process.cwd(), 'hitster_cards.pdf')
+    const outFile = path.resolve(process.cwd(), 'song_cards.pdf')
     await generatePdf(tracks, outFile)
     console.log('✅ PDF erstellt:', outFile)
     console.log("Druckhinweis: Duplex 'Flip on short edge' / 'Spiegeln an der kurzen Seite' verwenden.")
